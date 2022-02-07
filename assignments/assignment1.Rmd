@@ -9,10 +9,10 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-*Why am I taking this course?*
+## Why am I taking this course?
 
 I enrolled in this course because I thought it would help me become more comfortable with coding in R, making reproducible code/workflows, building functions on my own, and give me an introduction to data management. I’m not sure whether I want a career that involves or relies upon coding but think learning these skills will be valuable no matter if I use them in a future job. I do enjoy positions that involve field and lab work, and most of the time those jobs also comprise analyzing the data collected. 
 
-*My Data Science Background:*
+## My Data Science Background:
 
 Most of my coding experience has been gained at Bren, from ESM 206 (Stats & Data Analysis), ESM 244 (Advanced Stats & Data Analysis), and EDS 223 (Spatial Analysis) courses. I’ve also had extensive experience with Excel during my undergraduate coursework (biology, ecology, chemistry, physics, and oceanography lab courses). I feel relatively comfortable working with and visualizing data in Excel, and since starting Bren have been trying to shift my reliance on Excel to coding in R in RStudio (mainly due to the reproducible nature of coding and version control capability of GitHub). My Bren Group Project involves analyzing survey data, and my group has been using R/RStudio to do most of our analyses and visualizations. I’m wouldn’t consider myself to be a proficient coder, but I’m getting more comfortable the more I practice.
