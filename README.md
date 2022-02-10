@@ -1,2 +1,10 @@
-# esm232_computing
-UCSB Bren School ESM 232 - Computing for Environmental Science
+**ESM 262: Computing**
+UCSB Bren School - Computing for Environmental Science
+
+**Assignment Directory:**
+A1 - 
+A2 -
+A3 -
+A4 -
+A5 -
+A6 -
