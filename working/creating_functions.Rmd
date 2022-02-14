@@ -1,0 +1,55 @@
+---
+title: "Practice Creating a Function"
+author: "Sydney Rilum"
+date: "2/14/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+# load in necessary packages
+library(tidyverse)
+library(here)
+```
+
+```{r}
+# load in function.R
+source(here("R", "auto_power_gen.R"))
+```
+
+Write a function to compute power, given a truck of m=31752 kg (parameters for a heavy truck) for a range of different highway speeds (30 m/s, 80 km/hr, 120 km/hr, 40 km/hr, 5km/hr) The surface area is 16 m2.
+```{r}
+# compute truck power
+truck_power = auto_power_gen(m = 31752, V = c(30, 80/3.6, 120/3.6, 40/3.6, 5/3.6), A = 16)
+
+# make dataframe to plot results
+truck_power = as.data.frame(truck_power)
+truck_power$speed = c(30, 80/3.6, 120/3.6, 40/3.6, 5/3.6)
+```
+
+```{r}
+# compute power for a lighter vehicle
+truck_power_light = auto_power_gen(m = 11752, V = c(30, 80/3.6, 120/3.6, 40/3.6, 5/3.6), A = 16)
+
+# make dataframe
+truck_power_light = as.data.frame(truck_power_light)
+truck_power_light$speed = c(30, 80/3.6, 120/3.6, 40/3.6, 5/3.6)
+```
+
+Plot power as a function of speed 
+```{r}
+# graph power (W) vs. speed (m/s)
+ggplot() +
+  geom_point(data = truck_power, aes(x = speed, y = truck_power)) +
+  geom_line(data = truck_power, aes(x = speed, y = truck_power),
+            color = "navyblue") +
+  # Add a second line for lighter vehicle
+  geom_point(data = truck_power_light, aes(x = speed, y = truck_power_light)) +
+  geom_line(data = truck_power_light, aes(x = speed, y = truck_power_light),
+            color = "darkgreen") +
+  labs(x = "truck speed (m/s)",
+       y = "truck power (W)") +
+  theme_minimal()
+
+```
+
