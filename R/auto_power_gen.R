@@ -10,6 +10,7 @@
 #' @param p_air density of air (kg/m3), default = 1.2
 #' @param c_drag aerodynamic resistive coefficent, default = 0.3
 #' @return Pb power (W)
+#' @author Sydney Rilum
 #' 
 # function definition
 auto_power_gen = function(c_rolling = 0.015, m, g = 9.8, V, A, p_air = 1.2, c_drag = 0.3){

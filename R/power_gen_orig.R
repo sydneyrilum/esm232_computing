@@ -7,6 +7,7 @@
 #' @param g acceleration due to gravity (m/s) default=9.8
 #' @param Keff  reservoir efficiency (0-1) default 0.8
 #' @return power (W)
+#' @author Naomi Tague
 #'
 # function definition
 power_gen_orig = function(height, flow, rho=1000, g=9.8, Keff=0.8) {
