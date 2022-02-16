@@ -1,0 +1,86 @@
+---
+title: "for loop practice"
+author: "Sydney Rilum"
+date: "2/16/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Lets imagine that annual yield of a crop can be estimated follows:
+
+yield=1.8∗fertilizer2−0.5∗fertilizer+0.3∗TP
+
+and TP is mean precipitation in cm
+
+Use a for loop to compute the total yield after 10 years:
+- fertilizer is normally distributed with mean of 10 and standard deviation of 0.5
+- TP is 20cm
+
+```{r}
+# make a random sample of fertilizer application, 10 values with mean of 5 and standard deviation of 0.5
+fertilizer = rnorm(n = 10, mean = 5, sd = 0.5)
+
+# create a data frame to store results
+results = data.frame(fertilizer = fertilizer, crop_yield = NA)
+
+# TP is mean precipitation in cm
+TP = 20
+
+# use a for loop to compute the total yield after 10 years
+for (i in 1:10) {
+  results$crop_yield[i] = 1.8 * results$fertilizer[i]^2 - 0.5 * results$fertilizer[i] + 0.3 * TP
+}
+
+```
+
+Now create a function to that takes as input a single value for annual fertilizer and annual total precipitation and returns yield
+```{r}
+# crop yield function 
+crop_yield = function(fertilizer, TP){
+  yield = 1.8 * fertilizer^2 - 0.5 * fertilizer + 0.3 * TP
+  return(yield)
+}  
+
+# apply function
+crop_yield(fertilizer = c(1, 2, 3), TP = c(10, 20, 30))
+```
+
+Now modify your function so that it returns total yield if the user inputs a vector of fertilizer and a vector of precipitation
+```{r}
+# crop yield function 
+crop_yield = function(fertilizer, TP){
+  yield = 1.8 * fertilizer^2 - 0.5 * fertilizer + 0.3 * TP
+  total_yield = sum(yield)
+  return(total_yield)
+}  
+
+# use total yield
+crop_yield(fertilizer = c(1, 2, 3), TP = c(10, 20, 30))
+```
+
+Check that function returns the same result as your original for loop Add some error checking and test
+```{r}
+crop_yield = function(fertilizer, TP){
+  # error checking
+  fetilizer = ifelse(fertilizer < 0, return("fertilizer cannot be negative"), fertilizer)
+  # function
+  yield = 1.8 * fertilizer^2 - 0.5 * fertilizer + 0.3 * TP
+  return(yield)
+}  
+
+# test error checking 
+crop_yield(fertilizer = -2, TP = 20)
+```
+
+
+Note: you can put for loops inside of functions
+Note: for loops can also call functions
+
+
+
+
+
+
