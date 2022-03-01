@@ -1,0 +1,113 @@
+---
+title: 'Assignment 5: Flow Control'
+author: "Sydney Rilum"
+date: "2/28/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(here)
+
+# see data_types.Rmd for help
+```
+
+```{r}
+# read in data
+fish <- read.csv(here("data", "fish.txt")) %>% 
+  rename(fish = x)
+```
+
+```{r}
+# check class
+class(fish$fish) # character
+
+fish <- as.factor(fish$fish)
+
+class(fish) # factor
+```
+
+```{r}
+# which fish was caught the most (maximum frequency)
+max(summary(fish))
+
+# which fish was most/least frequently caught
+which.max(summary(fish))
+which.min(summary(fish))
+
+# to get just the name 
+names(which.max(summary(fish)))
+names(which.min(summary(fish)))
+
+# total number of fish caught
+length(fish)
+```
+
+
+```{r}
+# use results for creating text
+# sprintf creates a string %s mean use what ever is after the , to fill in a string
+plottitle=sprintf("Fish Caught Most = %s", names(which.max(summary(fish))))
+
+# graph results
+ggplot(data.frame(fish = fish), aes(fish, fill = fish)) +
+  geom_histogram(stat = "count") +
+  labs(title = plottitle)
+```
+
+
+# Write a function that takes a vector of fish names and always returns three items
+
+- the most common fish
+- the rarest fish
+- the total number of fish
+
+```{r}
+# read in function
+source(here("R", "fish_catch.R"))
+
+# see if it works!
+fish_catch(fish)
+```
+
+
+# Challenge: 
+
+What if we had multiple catches - how would you run your summary function for all of those catches - see below for an example to generate multiple catches 
+
+```{r}
+# generate some data if we had 10 different fishing days
+# some examples of using the purr family of functions
+possible.fish = c("salmon","steelhead","shark","tuna","cod")
+
+# lets generate random sample of the number of fish caught on each day
+ndays=10
+catches = round(runif(min=3, max=400, n=ndays))
+
+# now for each fishing day (and its number of fish caught) - use sample to genreate the fish
+catches_res = list(catches) %>% 
+  pmap(sample, x=possible.fish, replace=TRUE)
+
+# look at the sample catches
+catches_res[[1]]
+
+catches_res[[10]]
+
+# ok so how do we get the summary (rarest fish, number of fish for all catches in catch_res)?
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
