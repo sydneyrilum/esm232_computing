@@ -1,0 +1,76 @@
+---
+title: "practice function"
+author: "Sydney Rilum"
+date: "2/28/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(here)
+library(purrr)
+library(ggpubr)
+```
+
+```{r}
+#' Manning's Equation
+#'
+#' This function determines flow rate in an an open channel 
+#'
+#' @param a = Flow Area, (ft2)
+#' @param n = Manning's Roughness Coefficient
+#' @param r = Hydraulic Radius, (ft)
+#' @param s= Channel Slope, (ft/ft)
+#' @return q = Flow Rate, (ft3/s)
+#'
+#' function definition
+
+mannings = function(a= 3000, r, n, s) {
+  if (s < 0) return("slope must be greater then zero")
+    q = (1.49/n)*(a)*(r^(2/3))*(s^(1/2))
+  return(q)
+} 
+
+mannings
+mannings(r = 3, n = 2.2, s = 5)
+```
+
+```{r}
+# generate input data
+
+r <- seq(from=0.1, to=1, by=0.1)
+s <- seq(from=1, to=30, by=1)
+
+# create a data frame to store values
+flow_data <- data.frame(matrix(ncol = length(s), nrow = length(r)))
+
+rownames(flow_data) <- r
+colnames(flow_data) <- s
+
+# use nested "for loop" to run flow rate function for various hydraultic raidii and channel slopes
+for(i in 1:length(r)) {
+  for(j in 1:length(s)) {
+    flow_data[i,j] = mannings(n = 3.4, r = r[i], s = s[j])
+  }
+}
+
+# rearrange data frame to plot results
+flow_data <- flow_data %>% 
+  mutate(slope = rownames(flow_data)) %>% 
+  pivot_longer(!slope, names_to="s", values_to= "hydraulic_radius") %>% 
+  mutate(slope = as.numeric(slope))
+
+# graph result
+ggplot(data = flow_data, aes(x = slope,
+                                   y = hydraulic_radius)) +
+  facet_wrap(~s, scales = "free") +
+  geom_col()+
+  theme_minimal() +
+  labs(x = "Time (Days)", 
+       y = "Population Size",
+       title = "Exponential Population Growth for Various Growth Rates")
+
+```
+

@@ -81,7 +81,7 @@ possible.fish = c("salmon","steelhead","shark","tuna","cod")
 # we can use sample to simulate a random recording of catch by fisherman, lets say we pick 20 fish from the net
 
 catch1 = base::sample(possible.fish, size=20, replace=T)
-# because possible.fish was a factor catch1 will be a factor
+# because possible.fish was a vector, catch1 will be a vector
 catch1
 
 summary(catch1)
@@ -122,9 +122,18 @@ ggplot(data.frame(catch1=catch1), aes(catch1, fill=catch1)) +
   geom_histogram(stat="count") +
   labs(title=plottitle)
 
+
 #How do you figure out the rarest fish in our simulated ocean
+# which fish was least frequently caught
+which.min(summary(catch1))
 
+#to get just the name 
+names(which.min(summary(catch1)))
 
+# can't do
+which.min(catch1) # returns name and factor level not catch number
+which.min(summary(catch1)) # need summary
+summary(catch1)[5] # ID summary of catch #5
 ```
 
 # Aside **sprintf**
