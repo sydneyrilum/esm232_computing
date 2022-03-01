@@ -1,5 +1,5 @@
 ---
-title: "Assignment 1b"
+title: "Assignment 2"
 author: "Nikole Vannest, Sydney Rilum, Hanna Weyland"
 date: "2/9/2022"
 output: html_document
