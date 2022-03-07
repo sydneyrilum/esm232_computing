@@ -1,5 +1,5 @@
 ---
-title: "Assignment 6: Testing Functions of Temperature Risk"
+title: "Assignment 6: Functions That Compute Risk"
 author: "Sydney Rilum"
 date: "3/2/2022"
 output: html_document
