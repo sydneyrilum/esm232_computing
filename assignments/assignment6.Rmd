@@ -1,0 +1,62 @@
+---
+title: "Assignment 6: Testing Functions of Temperature Risk"
+author: "Sydney Rilum"
+date: "3/2/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(here)
+library(purrr)
+```
+
+## Create a function that computes a level of risk associated with a extreme temperature events.
+
+Risk of coral bleaching/population die-offs in coral reef ecosystems due to extreme sea surface temperature
+```{r}
+# read in coral temperature risk function
+source(here("R", "coral_bleaching_risk.R"))
+```
+
+Your function should take as input daily temperature data - from this data you should estimate how often extremes occur
+```{r}
+# input daily temp data
+temperatures <- read.csv(here("data", "tmax.txt")) %>%
+  separate(col = tmax.date, sep = " ", into = c("tmax", "date")) %>% 
+  mutate(tmax = as.numeric(tmax),
+         date = as.Date(date))
+```
+
+## What is an extreme temperature? Include a threshold to define extremes as one of the input parameters. 
+
+Corals are very sensitive to warm temperature. This function computes level of risk for coral bleaching based on temperature and other stress parameters. When the sea surface temperature (SST) is warmer than the bleaching threshold temperature, the corals will experience heat stress. This heat stress is the main cause of mass coral bleaching.
+
+stressed/bleached - can't tolerate water temps below 64 F (18 C)
+optimal - range 73-84 F (23-29 C)
+stressed/bleached - can't tolerate water temps 85+ F (30+ C) for more than 5 days
+--
+## What is risk? Develop the equation for risk.
+
+Parameters that influence risk (besides temp):
+- salinity (suitable range = 32-42 ppt)
+- water clarity (measured by turbidity meter, threshold = 5 NTU)
+
+```{r}
+# generate salnity data
+salinity <- runif(min = 30, max = 45, n = 300)
+
+# generate turbidity data
+turbidity <- runif(min = 0, max = 25, n = 300)
+
+```
+
+Have your function return both the risk associated with the input temperature sequence AND then number of extremes
+```{r}
+# use coral_bleaching_risk function on temp, salinity, and turbidity data
+risk <- coral_bleaching_risk(temp = temperatures$tmax,
+                             salinity = salinity,
+                             turbidity = turbidity)
+risk
+```
