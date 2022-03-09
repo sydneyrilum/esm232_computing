@@ -60,3 +60,12 @@ risk <- coral_bleaching_risk(temp = temperatures$tmax,
                              turbidity = turbidity)
 risk
 ```
+
+
+```{r}
+# testing that you get 2 extremes, and high risk
+coral_bleaching_risk(temp = c(31,32,33,34,33,35,32,33,34,33),
+     salinity = c(45,44,50,49,47,49,45,44,50,49,47,49),
+     turbidity = c(15,20,24,18,23,25,15,20,24,18,23,25))
+```
+

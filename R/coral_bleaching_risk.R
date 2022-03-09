@@ -28,27 +28,35 @@ coral_bleaching_risk = function(temp, temp_threshold = 30,
     return("Not enough turbidity measurements, at least 5 are needed")
   
     
-  # while loop, end looping any time we get more than 5 days with SST greater than the threshold temp
+  # for loop, end looping any time we get more than 5 days with SST greater than the threshold temp
   num_days = 0
+  num_extremes = 0
   i = 1
   
-  while ( (num_days < 5) && (i <= length(temp))) {
+  for (i in 1:length(temp)) {
     if (temp[i] > temp_threshold)
       # we have another day with SST greater than temp threshold, add another day to num_days
       num_days = num_days + 1
     else
       # we have to start over
       num_days = 0
-    # increment our counter with while loops
+    # increment our counter with for loops
     i = i + 1
+    # make a `num_extremes` counter to count number of times that we reach 5 day threshold
+    if (num_days == 5) {
+      num_days = 0
+      num_extremes = num_extremes + 1
+      #print("DANGER: coral bleaching event")
+    }
   }
+  
   
   # compute the mean salinity & turbidity
   mean_salinity = mean(salinity)
   mean_turbidity = mean(turbidity)
   
   # only high or med bleaching risk if temperature has been 30 C for more than 5 days in a row
-  if (num_days >= 5) {
+  if (num_extremes >= 1) {
     risk = case_when (mean_salinity < salinity_threshold_low ~ "low",
                       mean_salinity >= salinity_threshold_low &
                         mean_salinity < salinity_threshold_high ~ "medium",
@@ -60,5 +68,5 @@ coral_bleaching_risk = function(temp, temp_threshold = 30,
     risk = "low"  
     
   return(list(risk = risk, 
-              number_of_extremes = num_days))
+              num_extremes = num_extremes))
 }
